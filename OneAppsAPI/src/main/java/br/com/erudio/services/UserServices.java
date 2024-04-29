@@ -89,6 +89,26 @@ public class UserServices implements UserDetailsService {
         return vo;
     }
 
+    public UserVO update(User usuarioAtualizacao) throws Exception {
+        if(usuarioAtualizacao == null)
+            throw new RequiredObjectisNullException();
+
+        logger.info("Update one User!");
+
+        User usuarioBanco = repository.findById(usuarioAtualizacao.getId()).orElseThrow(() ->
+                new ResponseEntityExceptionHandler("No records found for this ID"));
+
+        usuarioBanco.setUserName(usuarioAtualizacao.getUserName());
+        usuarioBanco.setEmail(usuarioAtualizacao.getEmail());
+        usuarioBanco.setEnabled(usuarioAtualizacao.isEnabled());
+        if(usuarioAtualizacao.getPassword() != null && !usuarioAtualizacao.getPassword().isBlank())
+            usuarioBanco.setPassword(UtilsSecurity.convertPassword(usuarioAtualizacao.getPassword()));
+
+        var vo = DozerMapper.parseObject(repository.save(usuarioBanco), UserVO.class);
+        vo.add(linkTo(methodOn(UsuarioController.class).findById(vo.getKey())).withSelfRel());
+        return vo;
+    }
+
     private PagedModel<EntityModel<UserVO>> getListVos(Pageable pageable, Page<User> userPage) {
         var usersVosPage = userPage.map(u -> DozerMapper.parseObject(u, UserVO.class));
         usersVosPage.map(u -> {

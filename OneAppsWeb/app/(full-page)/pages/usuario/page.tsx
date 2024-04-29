@@ -18,9 +18,11 @@ const Crud = () => {
         id: 0,
         userName: '',
         fullName: '',
-        accountNonExpired: false,
-        accountNonLocked: false,
-        credentialsNonExpired: false,
+        email: '',
+        password: '',
+        accountNonExpired: true,
+        accountNonLocked: true,
+        credentialsNonExpired: true,
         enabled: true
     };
 
@@ -43,8 +45,8 @@ const Crud = () => {
         }).catch((error) => {
             toast.current?.show({
                 severity: 'error',
-                summary: 'Senha ou email incorretos',
-                detail: 'Senha ou email incorretos, tente novamente!',
+                summary: 'Erro ao carregar',
+                detail: 'Erro ao carregar usuarios, tente novamente ou contate o suporte',
                 life: 3000
             });
         });
@@ -79,13 +81,23 @@ const Crud = () => {
              if (usuario.id) {
                  const index = findIndexById(usuario.id + '');
 
-                 _usuarios[index] = _usuario;
-                 toast.current?.show({
-                     severity: 'success',
-                     summary: 'Sucesso',
-                     detail: 'Usuario Atualizado com sucesso!',
-                     life: 3000
-                 });
+                 _usuarios[`${index}`] = _usuario;
+                 usuarioService.alterar(_usuario).then((resp) => {
+                        toast.current?.show({
+                            severity: 'success',
+                            summary: 'Sucesso',
+                            detail: 'Usuario Atualizado com sucesso!',
+                            life: 3000
+                        });
+                 }).catch((error) => {
+                    toast.current?.show({
+                        severity: 'error',
+                        summary: 'Erro ao atualizar usuario',
+                        detail: 'Erro ao atualizar usuario, tente novamente ou contate o suporte!',
+                        life: 3000
+                    });
+                });
+                
              } else {
                 _usuarios.push(_usuario);
                 usuarioService.cadastrar(_usuario).then((resp) => {
@@ -158,15 +170,6 @@ const Crud = () => {
 
         return index;
     };
-
-    // const createId = () => {
-    //     let id = '';
-    //     let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    //     for (let i = 0; i < 5; i++) {
-    //         id += chars.charAt(Math.floor(Math.random() * chars.length));
-    //     }
-    //     return id;
-    // };
 
     const exportCSV = () => {
         dt.current?.exportCSV();
@@ -243,11 +246,20 @@ const Crud = () => {
         );
     };
 
+    const statusBodyTemplate  = (rowData: Projeto.User) => {
+        return (
+            <>
+                <span className="p-column-title">Status</span>
+                <i className={rowData.enabled ? 'pi pi-check' : 'pi pi-times'} />
+            </>
+        );
+    };
+
     const actionBodyTemplate = (rowData: Projeto.User) => {
         return (
             <>
                 <Button icon="pi pi-pencil" rounded severity="success" className="mr-2" onClick={() => editUsuario(rowData)} />
-                <Button icon="pi pi-trash" rounded severity="warning" onClick={() => confirmDeleteUsuario(rowData)} />
+                <Button icon="pi pi-trash" rounded severity="danger" onClick={() => confirmDeleteUsuario(rowData)} />
             </>
         );
     };
@@ -306,9 +318,12 @@ const Crud = () => {
                         responsiveLayout="scroll"
                     >
                         <Column selectionMode="multiple" headerStyle={{ width: '4rem' }}></Column>
-                        <Column field="nome" header="Nome" sortable body={nomeBodyTemplate} headerStyle={{ minWidth: '15rem' }}></Column>
-                        <Column field="nomeCompleto" header="Nome completo" sortable body={fullNameBodyTemplate} headerStyle={{ minWidth: '15rem' }}></Column>
-                        <Column field="Email" header="Email" sortable body={emailBodyTemplate} headerStyle={{ minWidth: '15rem' }}></Column>
+                        <Column field="userName" header="Nome" filterField='userName' filter
+                         sortable body={nomeBodyTemplate} headerStyle={{ minWidth: '10rem' }}></Column>
+                        <Column field="fullName" header="Nome completo" sortable filterField='fullName' filter body={fullNameBodyTemplate} headerStyle={{ minWidth: '10rem' }}></Column>
+                        <Column field="email" header="Email" sortable body={emailBodyTemplate} filterField='email' filter
+                         headerStyle={{ minWidth: '15rem' }}></Column>
+                        <Column field="enabled" header="Status" sortable body={statusBodyTemplate} headerStyle={{ minWidth: '9rem'}}></Column>
                         <Column body={actionBodyTemplate} headerStyle={{ minWidth: '10rem' }}></Column>
                     </DataTable>
 

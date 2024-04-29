@@ -10,6 +10,7 @@ import { LayoutContext } from '@/layout/context/layoutcontext';
 import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 import { UsuarioService } from '@/service/UsuarioService';
+import { login } from '../(main)/'
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -42,20 +43,21 @@ const LoginPage = () => {
     return (
         <div className={containerClassName}>
          <Toast ref={toast} />
-            <div className="flex flex-column align-items-center justify-content-center" style={{width:'100%'}}>
+            <div className="flex flex-column align-items-center justify-content-center" style={{backgroundImage: 'url(/layout/images/imagem-login.jpg)', 
+            width:'100%', height: '100vh', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
                 <div style={{
                         borderRadius: '23px',
                         padding: '0.3rem',  
-                        background: 'linear-gradient(180deg, var(--primary-color) 50%, rgba(33, 150, 243, 0) 60%)'
+                        background: 'linear-gradient(#0D2C4B, rgb(33 150 243 / 34%) 150%)'
                     }}>
 
-                    <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius: '20px' }}>
-                        <div className="text-center mb-5">
-                            <img src="/demo/images/login/avatar.png" alt="Image" height="40" className="mb-3" />
-                            <div className="text-900 text-3xl font-medium mb-3">One Apps</div>
+                    <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius:'20px', minWidth: '900px', 
+                    display: 'flex', justifyContent: 'space-around', background: 'transparent'}}>
+                        <div className="mb-5" style={{display: 'flex', alignItems: 'center'}}>
+                            <img src="/layout/images/logo-black.png" alt="Image" height="80" className="mb-3" />
                         </div>
 
-                        <div>
+                        <div style={{width: '50%', }}>
                             <label htmlFor="email1" className="block text-900 text-xl font-medium mb-2">
                                 Email
                             </label>

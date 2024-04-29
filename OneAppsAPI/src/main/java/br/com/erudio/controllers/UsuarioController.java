@@ -45,6 +45,12 @@ public class UsuarioController {
         return services.create(usuario);
     }
 
+    @PutMapping(produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML},
+            consumes = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
+    public UserVO atualizar(@RequestBody User usuario) throws Exception {
+        return services.update(usuario);
+    }
+
     @DeleteMapping(value = "/{id}",
             produces = {MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML, MediaType.APPLICATION_YML})
     public ResponseEntity<?> deleteUsuario(@PathVariable(value = "id") Long id) throws Exception {
