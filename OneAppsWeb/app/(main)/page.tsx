@@ -39,7 +39,7 @@ const LoginPage = () => {
                 severity: 'error',
                 summary: 'Senha ou email incorretos',
                 detail: 'Senha ou email incorretos, tente novamente!',
-                life: 3000
+                life: 3500
             });
         })
     }
