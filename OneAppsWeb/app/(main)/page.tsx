@@ -10,12 +10,13 @@ import { LayoutContext } from '@/layout/context/layoutcontext';
 import { InputText } from 'primereact/inputtext';
 import { classNames } from 'primereact/utils';
 import { UsuarioService } from '@/service/UsuarioService';
-import { login } from '../(main)/'
+import '@/styles/layout/_login.scss';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [checked, setChecked] = useState(false);
+    const [loading, setLoading] = useState(false);
     const { layoutConfig } = useContext(LayoutContext);
     const usuarioService = new UsuarioService();
     const toast = useRef<Toast>(null);
@@ -25,12 +26,15 @@ const LoginPage = () => {
      { 'p-input-filled': layoutConfig.inputStyle === 'filled' });
 
     function loginIn(email: string, password: string) {
+        setLoading(true);
         usuarioService.login(email, password).then((response) => {
             localStorage.setItem('username', response.data.userName)
             localStorage.setItem('accessToken', response.data.accessToken)
             localStorage.setItem('refleshToken', response.data.refleshToken)
             router.push('/pages/usuario')
+            setLoading(false);
         }).catch((error) => {
+            setLoading(false);
             toast.current?.show({
                 severity: 'error',
                 summary: 'Senha ou email incorretos',
@@ -43,25 +47,23 @@ const LoginPage = () => {
     return (
         <div className={containerClassName}>
          <Toast ref={toast} />
-            <div className="flex flex-column align-items-center justify-content-center" style={{backgroundImage: 'url(/layout/images/imagem-login.jpg)', 
-            width:'100%', height: '100vh', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
+            <div className="flex flex-column align-items-center justify-content-center background-div-image" >
                 <div style={{
                         borderRadius: '23px',
                         padding: '0.3rem',  
                         background: 'linear-gradient(#0D2C4B, rgb(33 150 243 / 34%) 150%)'
                     }}>
 
-                    <div className="w-full surface-card py-8 px-5 sm:px-8" style={{ borderRadius:'20px', minWidth: '900px', 
-                    display: 'flex', justifyContent: 'space-around', background: 'transparent'}}>
+                    <div className="w-full surface-card py-8 px-5 sm:px-8 form-login">
                         <div className="mb-5" style={{display: 'flex', alignItems: 'center'}}>
                             <img src="/layout/images/logo-black.png" alt="Image" height="80" className="mb-3" />
                         </div>
 
-                        <div style={{width: '50%', }}>
+                        <div style={{width: '60%' }}>
                             <label htmlFor="email1" className="block text-900 text-xl font-medium mb-2">
                                 Email
                             </label>
-                            <InputText id="email1" value={email} type="text" placeholder="Email address" 
+                            <InputText id="email1" value={email} type="text" placeholder="Endereço de Email" 
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full md:w-30rem mb-5" style={{ padding: '1rem' }} />
 
@@ -81,7 +83,7 @@ const LoginPage = () => {
                                     Esqueceu a senha?
                                 </a>
                             </div>
-                            <Button label="Acessar" className="w-full p-3 text-xl" onClick={() => loginIn(email, password)}></Button>
+                            <Button label="Acessar" loading={loading}  className="w-full p-3 text-xl" onClick={() => loginIn(email, password)}></Button>
                         </div>
                     </div>
                 </div>
