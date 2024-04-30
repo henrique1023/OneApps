@@ -8,9 +8,9 @@ import br.com.one.unittestes.mapper.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import br.com.one.data.vo.v1.PersonVO;
-import br.com.one.mapper.DozerMapper;
-import br.com.one.model.Person;
+import net.oneconsultoria.cbocontrol.data.vo.v1.PersonVO;
+import net.oneconsultoria.cbocontrol.mapper.DozerMapper;
+import net.oneconsultoria.cbocontrol.model.Person;
 
 
 public class DozerConverterTest {

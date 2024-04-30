@@ -8,7 +8,7 @@
         <version>3.2.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>br.com.one</groupId>
+    <groupId>net.oneconsultoria.cbocontrol</groupId>
     <artifactId>one_apps</artifactId>
     <version>0.0.1</version>
     <name>one_apps</name>

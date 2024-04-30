@@ -3,8 +3,8 @@ package br.com.one.unittestes.mapper.mocks;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.one.data.vo.v1.PersonVO;
-import br.com.one.model.Person;
+import net.oneconsultoria.cbocontrol.data.vo.v1.PersonVO;
+import net.oneconsultoria.cbocontrol.model.Person;
 
 public class MockPerson {
 

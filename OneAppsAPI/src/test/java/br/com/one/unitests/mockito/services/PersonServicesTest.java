@@ -3,10 +3,10 @@ package br.com.one.unitests.mockito.services;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-import br.com.one.data.vo.v1.PersonVO;
-import br.com.one.model.Person;
-import br.com.one.repositories.PersonRepository;
-import br.com.one.services.PersonServices;
+import net.oneconsultoria.cbocontrol.data.vo.v1.PersonVO;
+import net.oneconsultoria.cbocontrol.model.Person;
+import net.oneconsultoria.cbocontrol.repositories.PersonRepository;
+import net.oneconsultoria.cbocontrol.services.PersonServices;
 import br.com.one.unittestes.mapper.mocks.MockPerson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import br.com.one.exceptions.RequiredObjectisNullException;
+import net.oneconsultoria.cbocontrol.exceptions.RequiredObjectisNullException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
