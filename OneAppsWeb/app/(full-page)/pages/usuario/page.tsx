@@ -16,14 +16,15 @@ import { Projeto } from '@/types';
 const Crud = () => {
     let usuarioVazio: Projeto.User = {
         id: 0,
-        userName: '',
-        fullName: '',
+        nome: '',
+        apelido: '',
         email: '',
         password: '',
         accountNonExpired: true,
         accountNonLocked: true,
         credentialsNonExpired: true,
-        enabled: true
+        enabled: true,
+        status: ''
     };
 
     const [usuarios, setUsuarios] = useState(null);
@@ -75,7 +76,7 @@ const Crud = () => {
     const saveUsuario = () => {
         setSubmitted(true);
 
-         if (usuario.userName.trim()) {
+         if (usuario.nome.trim()) {
              let _usuarios = [...(usuarios as any)];
              let _usuario = { ...usuario };
              if (usuario.id) {
@@ -223,7 +224,7 @@ const Crud = () => {
         return (
             <>
                 <span className="p-column-title">Nome</span>
-                {rowData.userName}
+                {rowData.nome}
             </>
         );
     };
@@ -231,8 +232,8 @@ const Crud = () => {
     const fullNameBodyTemplate = (rowData: Projeto.User) => {
         return (
             <>
-                <span className="p-column-title">Nome completo</span>
-                {rowData.fullName}
+                <span className="p-column-title">Apelido</span>
+                {rowData.apelido}
             </>
         );
     };
@@ -250,7 +251,7 @@ const Crud = () => {
         return (
             <>
                 <span className="p-column-title">Status</span>
-                <i className={rowData.enabled ? 'pi pi-check' : 'pi pi-times'} />
+                <Button icon={rowData.enabled ? 'pi pi-check' : 'pi pi-times'} rounded severity={rowData.enabled ? "success" : "danger"}  />
             </>
         );
     };
@@ -318,9 +319,9 @@ const Crud = () => {
                         responsiveLayout="scroll"
                     >
                         <Column selectionMode="multiple" headerStyle={{ width: '4rem' }}></Column>
-                        <Column field="userName" header="Nome" filterField='userName' filter
+                        <Column field="nome" header="Nome" filterField='nome' filter
                          sortable body={nomeBodyTemplate} headerStyle={{ minWidth: '10rem' }}></Column>
-                        <Column field="fullName" header="Nome completo" sortable filterField='fullName' filter body={fullNameBodyTemplate} headerStyle={{ minWidth: '10rem' }}></Column>
+                        <Column field="apelido" header="Apelido" sortable filterField='apelido' filter body={fullNameBodyTemplate} headerStyle={{ minWidth: '10rem' }}></Column>
                         <Column field="email" header="Email" sortable body={emailBodyTemplate} filterField='email' filter
                          headerStyle={{ minWidth: '15rem' }}></Column>
                         <Column field="enabled" header="Status" sortable body={statusBodyTemplate} headerStyle={{ minWidth: '9rem'}}></Column>
@@ -332,30 +333,30 @@ const Crud = () => {
                             <label htmlFor="name">Nome</label>
                             <InputText
                                 id="userName"
-                                value={usuario.userName}
+                                value={usuario.nome}
                                 onChange={(e) => onInputChange(e, 'userName')}
                                 required
                                 autoFocus
                                 className={classNames({
-                                    'p-invalid': submitted && !usuario.userName
+                                    'p-invalid': submitted && !usuario.nome
                                 })}
                             />
-                            {submitted && !usuario.userName && <small className="p-invalid">Nome obrigatorio.</small>}
+                            {submitted && !usuario.nome && <small className="p-invalid">Nome obrigatorio.</small>}
                         </div>
 
                         <div className="field">
                             <label htmlFor="fullName">Nome completo</label>
                             <InputText
                                 id="fullName"
-                                value={usuario.fullName}
+                                value={usuario.apelido}
                                 onChange={(e) => onInputChange(e, 'fullName')}
                                 required
                                 autoFocus
                                 className={classNames({
-                                    'p-invalid': submitted && !usuario.fullName
+                                    'p-invalid': submitted && !usuario.apelido
                                 })}
                             />
-                            {submitted && !usuario.fullName && <small className="p-invalid">Nome completo obrigatorio.</small>}
+                            {submitted && !usuario.apelido && <small className="p-invalid">Nome completo obrigatorio.</small>}
                         </div>
 
                         <div className="field">
@@ -391,30 +392,30 @@ const Crud = () => {
                             <label htmlFor="userName">Nome</label>
                             <InputText
                                 id="userName"
-                                value={usuario.userName}
+                                value={usuario.nome}
                                 onChange={(e) => onInputChange(e, 'userName')}
                                 required
                                 autoFocus
                                 className={classNames({
-                                    'p-invalid': submitted && !usuario.userName
+                                    'p-invalid': submitted && !usuario.nome
                                 })}
                             />
-                            {submitted && !usuario.userName && <small className="p-invalid">Nome obrigatorio.</small>}
+                            {submitted && !usuario.nome && <small className="p-invalid">Nome obrigatorio.</small>}
                         </div>
 
                         <div className="field">
                             <label htmlFor="fullName">Nome completo</label>
                             <InputText
                                 id="fullName"
-                                value={usuario.fullName}
+                                value={usuario.apelido}
                                 onChange={(e) => onInputChange(e, 'fullName')}
                                 required
                                 autoFocus
                                 className={classNames({
-                                    'p-invalid': submitted && !usuario.fullName
+                                    'p-invalid': submitted && !usuario.apelido
                                 })}
                             />
-                            {submitted && !usuario.fullName && <small className="p-invalid">Nome completo obrigatorio.</small>}
+                            {submitted && !usuario.apelido && <small className="p-invalid">Nome completo obrigatorio.</small>}
                         </div>
 
                         <div className="field">
@@ -453,7 +454,7 @@ const Crud = () => {
                             <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
                             {usuario && (
                                 <span>
-                                    Tem certeza que deseja apagar <b>{usuario.userName}</b>?
+                                    Tem certeza que deseja apagar <b>{usuario.nome}</b>?
                                 </span>
                             )}
                         </div>

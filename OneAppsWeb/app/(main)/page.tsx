@@ -61,7 +61,7 @@ const LoginPage = () => {
 
                         <div style={{width: '60%' }}>
                             <label htmlFor="email1" className="block text-900 text-xl font-medium mb-2">
-                                Email
+                                Email / Usuario
                             </label>
                             <InputText id="email1" value={email} type="text" placeholder="Endereço de Email" 
                             onChange={(e) => setEmail(e.target.value)}
